@@ -3,6 +3,8 @@ import re
 import urllib2
 import httplib
 import urlparse
+import time
+import datetime
 
 def getRequestData(address):
   # Starting from https://stackoverflow.com/questions/1636637/i-am-downloading-a-file-using-python-urllib2-how-do-i-check-how-large-the-file
@@ -27,6 +29,8 @@ def getRequestData(address):
 
   requestData['size'] = size
   requestData['mime-type'] = mime
+  #from https://stackoverflow.com/questions/13890935/timestamp-python
+  requestData['timestamp'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
   return requestData
 
 
@@ -89,5 +93,6 @@ def saveOffSiteDetails(sites):
     #this does make the request twice... not the best, but not horrible
     details.append(getRequestData(site))
   
-  for detail in details:
-    print detail['mime-type'], detail['size'], detail['address']
+#  for detail in details:
+#    print detail['mime-type'], detail['size'], detail['address']
+  return details
